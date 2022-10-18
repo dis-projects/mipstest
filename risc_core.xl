@@ -1,0 +1,122 @@
+OUTPUT_ARCH("mips:isa32")
+TARGET("elf32-littlemips")
+SEARCH_DIR(.)
+ENTRY(_reset)
+GROUP(-lc -lgcc -lm)
+PROVIDE(HEAP_SIZE = 0x03000000);
+SECTIONS {
+ 
+ 
+ /* cram */
+ . =0xa3b00000; 
+ .reset_text : { *reset.*(.text .text.*) } 
+ _end_reset = .;
+ 
+ .gl_sec0 : { *(.gl_sec0* .gl_sec0.*) }
+
+ 
+ /* kseg0 */
+  . =0xC0000000;
+ _ftext = .;
+
+ .text :
+  {
+     _ftext = .;
+     * (.text .text.*);
+     KEEP(*(.init .init.*));
+     * (.rel.sdata)
+     KEEP(* (.fini .fini.*));
+     * (.reginfo)
+  }
+
+  .eh_frame_hdr : { *(.eh_frame_hdr) }
+  .eh_frame : { KEEP (*(.eh_frame)) }
+  .gcc_except_table : { *(.gcc_except_table) }
+  .jcr : { KEEP (*(.jcr)) }
+  .ctors    :
+  {
+    KEEP (*crtbegin.o(.ctors))
+    KEEP (*(EXCLUDE_FILE (*crtend.o) .ctors))
+    KEEP (*(SORT(.ctors.*)))
+    KEEP (*(.ctors))
+  }
+
+  .dtors    :
+  {
+    KEEP (*crtbegin.o(.dtors))
+    KEEP (*(EXCLUDE_FILE (*crtend.o) .dtors))
+    KEEP (*(SORT(.dtors.*)))
+    KEEP (*(.dtors))
+  }
+ .data :
+  {
+     . = ALIGN(16);
+     * (.data .data.*);
+     * (.MIPS.abiflags .MIPS.abiflags.*)
+  }
+ 
+  _gp = ALIGN(16);
+  .lit4 : { *(.lit4) }
+  .sdata : { *(.sdata .sdata.*) }
+  .rodata : { *(.rodata .rodata.*) }
+  . = ALIGN(8);
+  
+  PROVIDE (edata = .);
+  _edata = .;
+ 
+  _fbss = .;
+  .sbss : { *(.sbss*) *(.scommon) *(*ABS*)}
+ 
+  .bss  :
+  {
+     _bss_start = .;
+     *(.bss .bss.*)
+     *(COMMON)
+  PROVIDE(end = .);
+  _end = .;
+  
+  . += HEAP_SIZE;
+  . += 0x400;
+  PROVIDE(__stack = ALIGN(16));
+  . += 0x10;
+  }
+   /* DWARF debug sections.
+     Symbols in the DWARF debugging sections are relative to the beginning
+     of the section so we begin them at 0.  */
+  /* DWARF 1 */
+  .debug          0 : { *(.debug) }
+  .line           0 : { *(.line) }
+  /* GNU DWARF 1 extensions */
+  .debug_srcinfo  0 : { *(.debug_srcinfo) }
+  .debug_sfnames  0 : { *(.debug_sfnames) }
+  /* DWARF 1.1 and DWARF 2 */
+  .debug_aranges  0 : { *(.debug_aranges) }
+  .debug_pubnames 0 : { *(.debug_pubnames) }
+  /* DWARF 2 */
+  .debug_info     0 : { *(.debug_info .gnu.linkonce.wi.*) }
+  .debug_abbrev   0 : { *(.debug_abbrev) }
+  .debug_line     0 : { *(.debug_line .debug_line.* .debug_line_end ) }
+  .debug_frame    0 : { *(.debug_frame) }
+  .debug_str      0 : { *(.debug_str) }
+  .debug_loc      0 : { *(.debug_loc) }
+  .debug_macinfo  0 : { *(.debug_macinfo) }
+  /* SGI/MIPS DWARF 2 extensions */
+  .debug_weaknames 0 : { *(.debug_weaknames) }
+  .debug_funcnames 0 : { *(.debug_funcnames) }
+  .debug_typenames 0 : { *(.debug_typenames) }
+  .debug_varnames  0 : { *(.debug_varnames) }
+  /* DWARF 3 */
+  .debug_pubtypes 0 : { *(.debug_pubtypes) }
+  .debug_ranges   0 : { *(.debug_ranges) }
+  /* DWARF Extension.  */
+  .debug_macro    0 : { *(.debug_macro) }
+  .gnu.attributes 0 : { KEEP (*(.gnu.attributes)) }
+  .gptab.sdata : { *(.gptab.data) *(.gptab.sdata) }
+  .gptab.sbss : { *(.gptab.bss) *(.gptab.sbss) }
+  .mdebug.abi32 0 : { KEEP(*(.mdebug.abi32)) }
+  .mdebug.abiN32 0 : { KEEP(*(.mdebug.abiN32)) }
+  .mdebug.abi64 0 : { KEEP(*(.mdebug.abi64)) }
+  .mdebug.abiO64 0 : { KEEP(*(.mdebug.abiO64)) }
+  .mdebug.eabi32 0 : { KEEP(*(.mdebug.eabi32)) }
+  .mdebug.eabi64 0 : { KEEP(*(.mdebug.eabi64)) }
+}
