@@ -9,10 +9,7 @@
 #include <sys/times.h>
 #include <unistd.h>
 
-#include <main.h>
 #include <errno.h>
-
-#define get_core_id() 1
 
 int test_syscall(int corenum) {
     char *test_file_name = "/tmp/test-core15.txt";
@@ -212,7 +209,5 @@ int test_syscall(int corenum) {
 }
 
 int main(int32_t argc, char *argv[]) {
-    int iCore = get_core_id();
-
-    return test_syscall(iCore);
+    return test_syscall(1);
 }

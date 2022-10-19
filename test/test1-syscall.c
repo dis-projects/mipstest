@@ -7,8 +7,6 @@
 #include <sys/stat.h>
 #include <sys/time.h>
 
-#include <main.h>
-
 typedef struct {
     int mode;
     int len;
@@ -283,7 +281,7 @@ int main(int32_t argc, char *argv[]) {
     int nFiles = 1;
     int nBlocks = 8;
     int blkSize = 8192;
-    int iCore = 1; //get_core_id();
+    int iCore = 1;
 
     return test_syscall(iCore, nActions, nFiles, nBlocks, blkSize);
 }
