@@ -1,3 +1,5 @@
+// Copyright 2022 RnD Center "ELVEES"
+
 #include <unistd.h>
 
 int main(int argc, char **argv)

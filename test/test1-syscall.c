@@ -1,4 +1,4 @@
-// Copyright 2020 RnD Center "ELVEES", JSC
+// Copyright 2020-2022 RnD Center "ELVEES", JSC
 
 #include <stdio.h>
 #include <stdlib.h>

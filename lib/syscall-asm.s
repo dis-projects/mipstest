@@ -1,3 +1,4 @@
+/* Copyright 2022 RnD Center "ELVEES", JSC */
 	.text
 
 	.macro	scall, name, code
@@ -38,6 +39,8 @@
 	scall	_syscall_link,12
 /*__attribute__((naked)) void _syscall_unlink() {  // (const char *pathname)*/
 	scall	_syscall_unlink,13
+/*__attribute__((naked)) void _syscall_exit() {  // (int rc)*/
+	scall	_syscall_exit,99
 /*__attribute__((naked)) void _syscall_get_env() {  // (char *, uint32_t *)*/
 	scall	_syscall_get_env,100
 

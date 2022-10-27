@@ -1,4 +1,4 @@
-// Copyright 2020 RnD Center "ELVEES", JSC
+// Copyright 2020-2022 RnD Center "ELVEES", JSC
 
 #include <errno.h>
 #include <string.h>
@@ -13,8 +13,6 @@ int link(char *oldpath, char *newpath) {
         errno = EFAULT;
         return -1;
     }
-    //asm volatile("TRL1 %0, R0" ::"r"(strlen(oldpath)));
-    //asm volatile("TRL1 %0, R1" ::"r"(strlen(newpath)));
     int ret = _syscall_link(oldpath, newpath, strlen(oldpath), strlen(newpath));
     if (ret < 0) {
         errno = -ret;

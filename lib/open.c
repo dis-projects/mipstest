@@ -1,4 +1,4 @@
-// Copyright 2020 RnD Center "ELVEES", JSC
+// Copyright 2020-2022 RnD Center "ELVEES", JSC
 
 #include <errno.h>
 #include <sys/types.h>
@@ -59,7 +59,7 @@ int open(char *file, int flags, int mode) {
         cpu_flags &= ~O_SYNC;
         cpu_flags |= CPU_O_SYNC;
     }
-    //asm volatile("TRL1 %0, R0" ::"r"(strlen(file)));
+
     int ret = _syscall_open(file, cpu_flags, mode, strlen(file));
     if (ret < 0) {
         errno = -ret;

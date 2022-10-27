@@ -1,4 +1,4 @@
-// Copyright 2020 RnD Center "ELVEES", JSC
+// Copyright 2020-2022 RnD Center "ELVEES", JSC
 
 #include <errno.h>
 #include <sys/types.h>
@@ -14,7 +14,6 @@ int chdir(const char *file) {
         errno = EFAULT;
         return -1;
     }
-    //asm volatile("TRL1 %0, R0" ::"r"(strlen(file)));
     int ret = _syscall_chdir(file, strlen(file));
     if (ret < 0) {
         errno = -ret;

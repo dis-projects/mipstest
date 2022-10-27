@@ -1,4 +1,4 @@
-// Copyright 2020 RnD Center "ELVEES", JSC
+// Copyright 2020-2022 RnD Center "ELVEES", JSC
 
 #include <errno.h>
 #include <stdlib.h>
@@ -19,7 +19,7 @@ int stat(const char *file, struct stat *st) {
         errno = EFAULT;
         return -1;
     }
-    //asm volatile("TRL1 %0, R0" ::"r"(strlen(file)));
+
     stat_compat *st_compat = (stat_compat *) malloc(sizeof(stat_compat));
     int ret = _syscall_stat(file, st_compat, strlen(file));
     if (ret < 0) {

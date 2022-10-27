@@ -1,4 +1,4 @@
-// Copyright 2020 RnD Center "ELVEES", JSC
+// Copyright 2020-2022 RnD Center "ELVEES", JSC
 
 #include <errno.h>
 #include <string.h>
@@ -13,7 +13,7 @@ int unlink(char *name) {
         errno = EFAULT;
         return -1;
     }
-    //asm volatile("TRL1 %0, R0" ::"r"(strlen(name)));
+
     int ret = _syscall_unlink(name, strlen(name));
     if (ret < 0) {
         errno = -ret;

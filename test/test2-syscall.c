@@ -1,4 +1,4 @@
-// Copyright 2020 RnD Center "ELVEES", JSC
+// Copyright 2020-2022 RnD Center "ELVEES", JSC
 
 #include <assert.h>
 #include <fcntl.h>
@@ -11,6 +11,8 @@
 
 #include <errno.h>
 
+struct tms test_tms;
+
 int test_syscall(int corenum) {
     char *test_file_name = "/tmp/test-core15.txt";
     char *test_file_link = "/tmp/test-link-core15.txt";
@@ -19,7 +21,6 @@ int test_syscall(int corenum) {
     int test_fd = -1;
     struct stat test_stat;
     char test_buf[128];
-    struct tms test_tms;
     struct timeval test_timeval;
     struct timezone test_timezone;
     int err = 0; int ret;
